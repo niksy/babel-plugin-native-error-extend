@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-native-error-extend",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Babel plugin for native `Error` extending.",
   "main": "index.cjs.js",
   "module": "index.esm.js",
