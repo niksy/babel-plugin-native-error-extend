@@ -4,6 +4,8 @@
 
 Babel plugin for native `Error` extending.
 
+Handles all ususal cases such as classic extend and `constructor` override.
+
 ## Install
 
 ```sh
@@ -12,80 +14,49 @@ npm install babel-plugin-native-error-extend --save
 
 ## Usage
 
-```js
-// Module usage
+Use it via available [plugin activation options][babel-plugins].
+
+For `.babelrc` file:
+
+```json
+{
+	"plugins": ["babel-plugin-native-error-extend"]
+}
 ```
 
-More usage examples.
+Then, in your code:
 
-## API
+```js
+/* Before */
 
-### methodName(arg, [optionalArg])
+class Becky extends Error {}
 
-Returns: `Mixed`
+/* After */
 
-Method description.
+class Becky extends Error {
+	constructor(message) {
+		super(message);
+		this.name = this.constructor.name;
+		this.message = message;
 
-#### arg
+		if (typeof Error.captureStackTrace === 'function') {
+			Error.captureStackTrace(this, this.constructor);
+		} else {
+			this.stack = new Error(message).stack;
+		}
+	}
+}
+```
 
-Type: `Mixed`
+Check test fixtures ([actual](test/fixtures/classes.js) and
+[expected](test/fixtures/classes.expected.js)) for more examples.
 
-arg description.
+## Acknowledgments
 
-#### optionalArg
-
-Type: `Object`
-
-optionalArg description.
-
-##### prop1
-
-Type: `String`  
-Default: `'3'`
-
-`prop1` description.
-
-##### prop2
-
-Type: `Number`  
-Default: `3`
-
-##### prop3
-
-Type: `Number[]`  
-Default: `[1, 2, 3]`
-
-##### prop4
-
-Type: `Number[]` `String[]`  
-Default: `['1', '2', '3']`
-
-`prop4` description.
-
-##### prop5
-
-Type: `Function`  
-Default: `noop`
-
-`prop5` description.
-
-Function arguments:
-
--   **arg1** `String` arg1 description
--   **arg2** `Number` arg2 description
--   **arg3** `Element` `Boolean` arg3 description
-
-> Alternative approach
-
-| Property | Type                  | Default           | Description                                              |
-| -------- | --------------------- | ----------------- | -------------------------------------------------------- |
-| `prop1`  | `String`              | `'3'`             | `prop1` description.                                     |
-| `prop2`  | `Number`              | `3`               | `prop2` description.                                     |
-| `prop3`  | `Number[]`            | `[1, 2, 3]`       | `prop3` description.                                     |
-| `prop4`  | `Number[]` `String[]` | `['1', '2', '3']` | `prop4` description.                                     |
-| `prop5`  | `Function`            | `noop`            | `prop5` description. (No function arguments description) |
-
----
+-   [`extendable-error-class`](https://github.com/brillout/extendable-error-class)
+-   [`custom-error-class`](https://github.com/mafintosh/custom-error-class)
+-   [`extensible-error`](https://github.com/justmoon/extensible-error)
+-   [`es6-error`](https://github.com/bjyoungblood/es6-error)
 
 ## License
 
