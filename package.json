@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-native-error-extend",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Babel plugin for native `Error` extending.",
   "license": "MIT",
   "author": "Ivan Nikolić <niksy5@gmail.com> (http://ivannikolic.com)",
