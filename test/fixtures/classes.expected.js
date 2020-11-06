@@ -65,3 +65,20 @@ class Rufus extends Error {
   }
 
 }
+
+class Josie extends Error {
+  constructor(Daisy = 'Daisy') {
+    super(Daisy);
+    this.name = this.constructor.name;
+    this.message = Daisy;
+
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, this.constructor);
+    } else {
+      this.stack = new Error(Daisy).stack;
+    }
+
+    console.log(Daisy);
+  }
+
+}

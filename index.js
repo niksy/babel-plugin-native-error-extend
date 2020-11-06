@@ -43,12 +43,17 @@ export default ({ types: t, template }) => {
 				const constructorPath = path
 					.get('body.body')
 					.find((path) => path.node.kind === 'constructor');
-				const [extractedMessage] = constructorPath.node.params ?? [];
+				const [extractedMessage] = constructorPath.get('params') ?? [];
 				message = extractedMessage;
 
-				if (!message) {
+				if (typeof message === 'undefined') {
 					message = t.identifier('message');
 					constructorPath.unshiftContainer('params', message);
+				} else {
+					if (message.isAssignmentPattern()) {
+						message = message.get('left');
+					}
+					message = message.node;
 				}
 				constructorPath.get('body.body').forEach((path) => {
 					try {

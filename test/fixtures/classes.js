@@ -20,3 +20,10 @@ class Rufus extends Error {
 		console.log(Scout);
 	}
 }
+
+class Josie extends Error {
+	constructor(Daisy = 'Daisy') {
+		super(Daisy);
+		console.log(Daisy);
+	}
+}
