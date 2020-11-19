@@ -27,3 +27,5 @@ class Josie extends Error {
 		console.log(Daisy);
 	}
 }
+
+class Gizmo {}

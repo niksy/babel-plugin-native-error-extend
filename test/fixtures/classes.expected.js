@@ -82,3 +82,5 @@ class Josie extends Error {
   }
 
 }
+
+class Gizmo {}

@@ -21,7 +21,7 @@ export default ({ types: t, template }) => {
 		visitor: {
 			ClassDeclaration(path) {
 				let message;
-				const isError = path.node.superClass.name === 'Error';
+				const isError = path.node.superClass?.name === 'Error' ?? false;
 				const hasConstructor = path.node.body.body.some(
 					({ kind }) => kind === 'constructor'
 				);
