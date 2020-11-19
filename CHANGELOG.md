@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [2.0.1][] - 2020-11-19
+
 ### Fixed
 
 -   Ignore root classes
@@ -28,3 +30,6 @@
 
 [1.0.0]: https://github.com/niksy/babel-plugin-native-error-extend/tree/v1.0.0
 [2.0.0]: https://github.com/niksy/babel-plugin-native-error-extend/tree/v2.0.0
+[unreleased]:
+	https://github.com/niksy/babel-plugin-native-error-extend/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/niksy/babel-plugin-native-error-extend/tree/v2.0.1
