@@ -29,3 +29,10 @@ class Josie extends Error {
 }
 
 class Gizmo {}
+
+class Hannah extends Error {
+	constructor(Tucker = 'Tucker') {
+		super(Charlie);
+		console.log(Tucker);
+	}
+}

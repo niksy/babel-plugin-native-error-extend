@@ -43,7 +43,15 @@ export default ({ types: t, template }) => {
 				const constructorPath = path
 					.get('body.body')
 					.find((path) => path.node.kind === 'constructor');
-				const [extractedMessage] = constructorPath.get('params') ?? [];
+
+				const superCall = constructorPath
+					.get('body.body')
+					.find((path) => path.get('expression.callee').isSuper());
+
+				const [extractedMessage] =
+					superCall?.get('expression.arguments') ??
+					constructorPath.get('params') ??
+					[];
 				message = extractedMessage;
 
 				if (typeof message === 'undefined') {
