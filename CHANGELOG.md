@@ -2,6 +2,11 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Add support for second parameter
+    ([#3](https://github.com/niksy/babel-plugin-native-error-extend/issues/3))
+
 ## [2.0.2][] - 2020-12-08
 
 ### Fixed

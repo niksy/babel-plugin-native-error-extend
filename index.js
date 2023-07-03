@@ -1,7 +1,7 @@
 const bodyFactory = (template) => {
-	return (message) => {
+	return (message, options) => {
 		return template(`
-			super(MESSAGE);
+			super(MESSAGE, OPTIONS);
 			this.name = this.constructor.name;
 			this.message = MESSAGE;
 			if (typeof Error.captureStackTrace === 'function') {
@@ -10,9 +10,23 @@ const bodyFactory = (template) => {
 				this.stack = new Error(MESSAGE).stack;
 			}
 		`)({
-			MESSAGE: message
+			MESSAGE: message,
+			OPTIONS: options
 		});
 	};
+};
+
+const resolveParameter = (parameter, { name, constructorPath, t }) => {
+	if (typeof parameter === 'undefined') {
+		parameter = t.identifier(name);
+		constructorPath.pushContainer('params', parameter);
+	} else {
+		if (parameter.isAssignmentPattern()) {
+			parameter = parameter.get('left');
+		}
+		parameter = parameter.node;
+	}
+	return parameter;
 };
 
 export default ({ types: t, template }) => {
@@ -20,7 +34,7 @@ export default ({ types: t, template }) => {
 	return {
 		visitor: {
 			ClassDeclaration(path) {
-				let message;
+				let message, options;
 				const isError = path.node.superClass?.name === 'Error' ?? false;
 				const hasConstructor = path.node.body.body.some(
 					({ kind }) => kind === 'constructor'
@@ -30,12 +44,13 @@ export default ({ types: t, template }) => {
 				}
 				if (!hasConstructor) {
 					message = t.identifier('message');
+					options = t.identifier('options');
 					path.get('body').unshiftContainer('body', [
 						t.classMethod(
 							'constructor',
 							t.identifier('constructor'),
-							[message],
-							t.blockStatement(body(message))
+							[message, options],
+							t.blockStatement(body(message, options))
 						)
 					]);
 					return;
@@ -48,21 +63,21 @@ export default ({ types: t, template }) => {
 					.get('body.body')
 					.find((path) => path.get('expression.callee').isSuper());
 
-				const [extractedMessage] =
+				const [extractedMessage, extractedOptions] =
 					superCall?.get('expression.arguments') ??
 					constructorPath.get('params') ??
 					[];
-				message = extractedMessage;
+				message = resolveParameter(extractedMessage, {
+					name: 'message',
+					constructorPath,
+					t
+				});
+				options = resolveParameter(extractedOptions, {
+					name: 'options',
+					constructorPath,
+					t
+				});
 
-				if (typeof message === 'undefined') {
-					message = t.identifier('message');
-					constructorPath.unshiftContainer('params', message);
-				} else {
-					if (message.isAssignmentPattern()) {
-						message = message.get('left');
-					}
-					message = message.node;
-				}
 				constructorPath.get('body.body').forEach((path) => {
 					try {
 						const calleePath = path.get('expression.callee');
@@ -79,7 +94,7 @@ export default ({ types: t, template }) => {
 				});
 				constructorPath
 					.get('body')
-					.unshiftContainer('body', body(message));
+					.unshiftContainer('body', body(message, options));
 			}
 		}
 	};
