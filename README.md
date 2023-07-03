@@ -34,8 +34,8 @@ class Becky extends Error {}
 /* After */
 
 class Becky extends Error {
-	constructor(message) {
-		super(message);
+	constructor(message, options) {
+		super(message, options);
 		this.name = this.constructor.name;
 		this.message = message;
 
