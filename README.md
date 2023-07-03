@@ -64,8 +64,8 @@ MIT © [Ivan Nikolić](http://ivannikolic.com)
 
 <!-- prettier-ignore-start -->
 
-[ci]: https://travis-ci.com/niksy/babel-plugin-native-error-extend
-[ci-img]: https://travis-ci.com/niksy/babel-plugin-native-error-extend.svg?branch=master
+[ci]: https://github.com/niksy/babel-plugin-native-error-extend/actions?query=workflow%3ACI
+[ci-img]: https://github.com/niksy/babel-plugin-native-error-extend/workflows/CI/badge.svg?branch=master
 [babel-plugins]: http://babeljs.io/docs/plugins/
 
 <!-- prettier-ignore-end -->
