@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [2.1.0][] - 2023-07-03
+
 ### Changed
 
 -   Add support for second parameter
@@ -45,3 +47,6 @@
 [unreleased]:
 	https://github.com/niksy/babel-plugin-native-error-extend/compare/v2.0.2...HEAD
 [2.0.2]: https://github.com/niksy/babel-plugin-native-error-extend/tree/v2.0.2
+[Unreleased]:
+	https://github.com/niksy/babel-plugin-native-error-extend/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/niksy/babel-plugin-native-error-extend/tree/v2.1.0
