@@ -2,6 +2,10 @@ class Becky extends Error {}
 
 class Ellie extends Becky {}
 
+class Casey extends Error {
+	constructor(Bruno, Sammy) {}
+}
+
 class Belle extends Error {
 	constructor() {
 		console.log(Mimi);
@@ -56,4 +60,8 @@ class Oreo extends Error {
 		super(Rex, Baxter);
 		console.log(Max, Molly);
 	}
+}
+
+class Chico extends Error {
+	constructor(...args) {}
 }

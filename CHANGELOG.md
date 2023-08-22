@@ -2,6 +2,11 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+-   Handle rest argument
+    ([#4](https://github.com/niksy/babel-plugin-native-error-extend/issues/4))
+
 ## [2.1.0][] - 2023-07-03
 
 ### Changed

@@ -67,16 +67,22 @@ export default ({ types: t, template }) => {
 					superCall?.get('expression.arguments') ??
 					constructorPath.get('params') ??
 					[];
-				message = resolveParameter(extractedMessage, {
-					name: 'message',
-					constructorPath,
-					t
-				});
-				options = resolveParameter(extractedOptions, {
-					name: 'options',
-					constructorPath,
-					t
-				});
+				if (extractedMessage?.isRestElement()) {
+					const argument = extractedMessage.get('argument').node;
+					message = t.memberExpression(argument, t.identifier('0'));
+					options = t.memberExpression(argument, t.identifier('1'));
+				} else {
+					message = resolveParameter(extractedMessage, {
+						name: 'message',
+						constructorPath,
+						t
+					});
+					options = resolveParameter(extractedOptions, {
+						name: 'options',
+						constructorPath,
+						t
+					});
+				}
 
 				constructorPath.get('body.body').forEach((path) => {
 					try {

@@ -11,6 +11,18 @@ class Becky extends Error {
   }
 }
 class Ellie extends Becky {}
+class Casey extends Error {
+  constructor(Bruno, Sammy) {
+    super(Bruno, Sammy);
+    this.name = this.constructor.name;
+    this.message = Bruno;
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, this.constructor);
+    } else {
+      this.stack = new Error(Bruno).stack;
+    }
+  }
+}
 class Belle extends Error {
   constructor(message, options) {
     super(message, options);
@@ -114,5 +126,17 @@ class Oreo extends Error {
       this.stack = new Error(Rex).stack;
     }
     console.log(Max, Molly);
+  }
+}
+class Chico extends Error {
+  constructor(...args) {
+    super(args["0"], args["1"]);
+    this.name = this.constructor.name;
+    this.message = args["0"];
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, this.constructor);
+    } else {
+      this.stack = new Error(args["0"]).stack;
+    }
   }
 }
